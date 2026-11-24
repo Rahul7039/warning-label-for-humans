@@ -21,11 +21,16 @@ def validate(line: str) -> None:
         raise ValueError(f"entry is {len(line)} characters, over the 160 limit")
 
 
+def write_entry(path: str, line: str) -> None:
+    """Write the line exactly, with no trailing newline added."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(line)
+
+
 def main() -> None:
     validate(ENTRY)
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        f.write(ENTRY)
+    write_entry(OUTPUT_PATH, ENTRY)
     print(f"wrote {len(ENTRY)} characters to {OUTPUT_PATH}")
 
 
